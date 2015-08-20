@@ -1,13 +1,15 @@
-remote_file "#{Chef::Config[:file_cache_path]}/codedeploy-agent_all.deb" do
-  source 'https://s3.amazonaws.com/aws-codedeploy-us-east-1/latest/codedeploy-agent_all.deb'
-  action :create
+remote_file "#{Chef::Config[:file_cache_path]}/codedeploy-install.sh" do
+    source "https://s3.amazonaws.com/aws-codedeploy-us-east-1/latest/install"
+    mode "0744"
+    owner "root"
+    group "root"
 end
 
-dpkg_package 'codedeploy-agent' do
-  source "#{Chef::Config[:file_cache_path]}/codedeploy-agent_all.deb"
-  action :install
+execute "install_codedeploy_agent" do
+  command "#{Chef::Config[:file_cache_path]}/codedeploy-install.sh auto"
+  user "root"
 end
 
-service 'codedeploy-agent' do
+service "codedeploy-agent" do
   action [:enable, :start]
 end
