@@ -60,7 +60,7 @@ define :opsworks_deploy do
   end
 
   # setup deployment & checkout
-  if deploy[:scm] && deploy[:scm][:scm_type] != 'other'
+  if deploy[:scm]
     Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]}")
     deploy deploy[:deploy_to] do
       provider Chef::Provider::Deploy.const_get(deploy[:chef_provider])
@@ -93,8 +93,8 @@ define :opsworks_deploy do
         svn_password deploy[:scm][:password]
         svn_arguments "--no-auth-cache --non-interactive --trust-server-cert"
         svn_info_args "--no-auth-cache --non-interactive --trust-server-cert"
-      else
-        raise "unsupported SCM type #{deploy[:scm][:scm_type].inspect}"
+#      else
+#        raise "unsupported SCM type #{deploy[:scm][:scm_type].inspect}"
       end
 
       before_migrate do
