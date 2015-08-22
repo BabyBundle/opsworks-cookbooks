@@ -93,8 +93,8 @@ define :opsworks_deploy do
         svn_password deploy[:scm][:password]
         svn_arguments "--no-auth-cache --non-interactive --trust-server-cert"
         svn_info_args "--no-auth-cache --non-interactive --trust-server-cert"
-      else
-        raise "unsupported SCM type #{deploy[:scm][:scm_type].inspect}"
+#      else
+#        raise "unsupported SCM type #{deploy[:scm][:scm_type].inspect}"
       end
 
       before_migrate do
