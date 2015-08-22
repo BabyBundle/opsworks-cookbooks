@@ -184,6 +184,12 @@ define :opsworks_deploy do
     end
   end
 
+  if deploy[:application_type] == 'nodejs'
+    if deploy[:auto_npm_install_on_deploy]
+      OpsWorks::NodejsConfiguration.npm_install(application, node[:deploy][application], release_path, node[:opsworks_nodejs][:npm_install_options])
+    end
+  end
+
   bash "Enable selinux var_log_t target for application log files" do
     dir_path_log = "#{deploy[:deploy_to]}/shared/log"
     context = "var_log_t"
