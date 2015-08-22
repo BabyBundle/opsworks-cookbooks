@@ -60,7 +60,7 @@ define :opsworks_deploy do
   end
 
   # setup deployment & checkout
-  if deploy[:scm] && deploy[:scm][:scm_type] != 'other'
+  if deploy[:scm]
     Chef::Log.debug("Checking out source code of application #{application} with type #{deploy[:application_type]}")
     deploy deploy[:deploy_to] do
       provider Chef::Provider::Deploy.const_get(deploy[:chef_provider])
@@ -181,12 +181,6 @@ define :opsworks_deploy do
 
     else
       raise "Unsupport Rails stack"
-    end
-  end
-
-  if deploy[:application_type] == 'nodejs'
-    if deploy[:auto_npm_install_on_deploy]
-      OpsWorks::NodejsConfiguration.npm_install(application, node[:deploy][application], release_path, node[:opsworks_nodejs][:npm_install_options])
     end
   end
 
