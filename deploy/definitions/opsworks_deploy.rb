@@ -40,6 +40,12 @@ define :opsworks_deploy do
         :scm_type => 'git',
         :repository => repository
       }
+    elsif deploy[:scm][:scm_type].to_s == 'other'
+      repository = prepare_codedeploy_checkouts(deploy[:scm])
+      node.set[:deploy][application][:scm] = {
+        :scm_type => 'git',
+        :repository => repository
+      }
     end
   end
 
