@@ -12,7 +12,7 @@ node[:deploy].each do |application, deploy|
   end
 
   execute "install_mongodb_client" do
-    command "tar zxvf #{Chef::Config[:file_cache_path]}/mongodb-linux-x86_64-3.0.4.tgz"
+    command "tar zxvf #{Chef::Config[:file_cache_path]}/mongodb-linux-x86_64-3.0.4.tgz -C #{Chef::Config[:file_cache_path]}/"
     user "root"
   end
 
