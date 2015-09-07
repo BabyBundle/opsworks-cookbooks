@@ -18,5 +18,6 @@ node[:deploy].each do |application, deploy|
 
   execute "clear_database" do
     command "source #{deploy[:deploy_to]}/shared/app.env && #{Chef::Config[:file_cache_path]}/mongodb-linux-x86_64-3.0.4/bin/mongo $DB_HOST/$DB_NAME -u $DB_USER -p $DB_PASSWORD < #{deploy[:deploy_to]}/current/scripts/cleanAndSeedDb.js"
+    user "root"
   end
 end
